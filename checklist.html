@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Checklist</title>
+    <style>
+        .checked {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <h1>Interactive Checklist</h1>
+    <div>
+        <input type="text" id="newItem" placeholder="New item name">
+        <button onclick="addItem()">Add Item</button>
+    </div>
+    <ul id="checklist">
+    </ul>
+    <div>
+        <h2>Summary:</h2>
+        <p>Checked Items:</p>
+        <ul id="checkedItems"></ul>
+        <p>Unchecked Items:</p>
+        <ul id="uncheckedItems"></ul>
+    </div>
+
+    <script>
+        const checklist = document.getElementById('checklist');
+        const checkedItems = document.getElementById('checkedItems');
+        const uncheckedItems = document.getElementById('uncheckedItems');
+
+        function addItem() {
+            const newItem = document.getElementById('newItem');
+            if (newItem.value.trim() !== '') {
+                const li = document.createElement('li');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                li.appendChild(checkbox);
+                li.appendChild(document.createTextNode(newItem.value));
+                checklist.appendChild(li);
+                newItem.value = '';
+                checkbox.addEventListener('change', updateSummary);
+                updateSummary();
+            }
+        }
+
+        function updateSummary() {
+            checkedItems.innerHTML = '';
+            uncheckedItems.innerHTML = '';
+
+            const items = checklist.querySelectorAll('li');
+            items.forEach(item => {
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                const label = item.textContent.trim();
+
+                if (checkbox.checked) {
+                    const li = document.createElement('li');
+                    li.textContent = label;
+                    li.classList.add('checked');
+                    checkedItems.appendChild(li);
+                } else {
+                    const li = document.createElement('li');
+                    li.textContent = label;
+                    uncheckedItems.appendChild(li);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
