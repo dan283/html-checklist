@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Checklist</title>
+    <title>Dinamikus Ellenőrzőlista</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -57,22 +57,22 @@
     </style>
 </head>
 <body>
-    <h2>Checklist</h2>
-    <button onclick="addItem()">Add Item</button>
+    <h2>Ellenőrzőlista</h2>
+    <button onclick="addItem()">Új Tétel Hozzáadása</button>
     <table id="checklist">
         <thead>
             <tr>
-                <th>Item</th>
-                <th>Required Document</th>
-                <th>Acquired</th>
-                <th>Work Done</th>
-                <th>Delivered</th>
+                <th>Tétel</th>
+                <th>Szükséges Dokumentum</th>
+                <th>Beszerzett</th>
+                <th>Munka Elvégezve</th>
+                <th>Kézbesítve</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td><input type="text" value="Contract" onchange="updateText(this)"></td>
-                <td><input type="text" value="Signed Agreement" onchange="updateText(this)"></td>
+                <td><input type="text" value="Szerződés" onchange="updateText(this)"></td>
+                <td><input type="text" value="Aláírt Megállapodás" onchange="updateText(this)"></td>
                 <td><input type="checkbox" onclick="markCompleted(this)"></td>
                 <td><input type="checkbox" onclick="markCompleted(this)"></td>
                 <td><input type="checkbox" onclick="markCompleted(this)"></td>
@@ -82,10 +82,10 @@
 
     <script>
         function addItem() {
-            let itemName = prompt("Enter item name:");
+            let itemName = prompt("Adja meg a tétel nevét:");
             if (!itemName) return;
             
-            let docName = prompt("Enter required document name:");
+            let docName = prompt("Adja meg a szükséges dokumentum nevét:");
             if (!docName) docName = "-";
             
             let table = document.getElementById("checklist").getElementsByTagName('tbody')[0];
@@ -97,7 +97,7 @@
             let cell5 = row.insertCell(4);
             
             cell1.innerHTML = `<input type="text" value="${itemName}" onchange="updateText(this)">`;
-            cell2.innerHTML = `<input type="text" value="${docName}" onchange="updateText(this)">`;
+            cell2.innerHTML = `<input type="text" value="${docName}" onchange="updateText(this)"> <input type="checkbox" onclick="markCompleted(this)">`;
             cell3.innerHTML = '<input type="checkbox" onclick="markCompleted(this)">';
             cell4.innerHTML = '<input type="checkbox" onclick="markCompleted(this)">';
             cell5.innerHTML = '<input type="checkbox" onclick="markCompleted(this)">';
