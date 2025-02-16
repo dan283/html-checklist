@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Checklist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        .completed {
+            background-color: lightgreen;
+        }
+        button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 15px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        input[type="text"] {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Checklist</h2>
+    <button onclick="addItem()">Add Item</button>
+    <table id="checklist">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Required Document</th>
+                <th>Acquired</th>
+                <th>Work Done</th>
+                <th>Delivered</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" value="Contract" onchange="updateText(this)"></td>
+                <td><input type="text" value="Signed Agreement" onchange="updateText(this)"></td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function addItem() {
+            let itemName = prompt("Enter item name:");
+            if (!itemName) return;
+            
+            let docName = prompt("Enter required document name:");
+            if (!docName) docName = "-";
+            
+            let table = document.getElementById("checklist").getElementsByTagName('tbody')[0];
+            let row = table.insertRow();
+            let cell1 = row.insertCell(0);
+            let cell2 = row.insertCell(1);
+            let cell3 = row.insertCell(2);
+            let cell4 = row.insertCell(3);
+            let cell5 = row.insertCell(4);
+            
+            cell1.innerHTML = `<input type="text" value="${itemName}" onchange="updateText(this)">`;
+            cell2.innerHTML = `<input type="text" value="${docName}" onchange="updateText(this)">`;
+            cell3.innerHTML = '<input type="checkbox" onclick="markCompleted(this)">';
+            cell4.innerHTML = '<input type="checkbox" onclick="markCompleted(this)">';
+            cell5.innerHTML = '<input type="checkbox" onclick="markCompleted(this)">';
+        }
+        
+        function markCompleted(checkbox) {
+            if (checkbox.checked) {
+                checkbox.parentNode.classList.add("completed");
+                let date = new Date().toLocaleDateString();
+                checkbox.nextSibling ? checkbox.nextSibling.remove() : null;
+                checkbox.parentNode.appendChild(document.createTextNode(" " + date));
+            } else {
+                checkbox.parentNode.classList.remove("completed");
+                checkbox.nextSibling ? checkbox.nextSibling.remove() : null;
+            }
+        }
+        
+        function updateText(input) {
+            input.value = input.value.trim();
+        }
+    </script>
+</body>
+</html>
